@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import Footer from './Footer';
 
 
 function App() {
@@ -52,6 +53,8 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
           />
+
+          <Footer/>
 
           <ImagePopup
             card={selectedCard}
