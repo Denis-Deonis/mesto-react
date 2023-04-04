@@ -51,7 +51,7 @@ export default function Main(props) {
               link={card.link}
               name={card.name}
               likes={card.likes.length}
-              // onCardClick={props.onCardClick}
+              onCardClick={props.onCardClick}
             />
           ) )          
         }
