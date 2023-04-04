@@ -13,7 +13,7 @@ export default function Card(props) {
         <h2 className="element__title">{props.name}</h2>
         <div className="element__container-like">
           <button className="element__like-button" type="button" aria-label="Лайк"></button>
-          <p className="element__count-like">{props.likes}</p>
+          <p className="element__count-like">{props.likes.length}</p>
         </div>
       </div>
     </li>

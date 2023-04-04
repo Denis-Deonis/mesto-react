@@ -33,7 +33,7 @@ export default function Main(props) {
         <div className="profile__heading">
           <h1 className="profile__title">{userInfo.name}</h1>
           <button className="profile__edit-button" type="button" aria-label="Редактировать" 
-            //onClick={props.onEditProfile}
+            onClick={props.onEditProfile}
           ></button>
         </div>
         <p className="profile__subtitle">{userInfo.about}</p>
@@ -50,7 +50,7 @@ export default function Main(props) {
               card={card}
               link={card.link}
               name={card.name}
-              likes={card.likes.length}
+              likes={card.likes}
               onCardClick={props.onCardClick}
             />
           ) )          
