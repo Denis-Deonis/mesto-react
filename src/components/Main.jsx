@@ -25,8 +25,8 @@ export default function Main(props) {
       <section className="profile">
       <div className="profile__wrapper-relative">
         <img className="profile__avatar" src={userInfo.avatar} alt={userInfo.name} />
-        <button className="profile__edit-avatar" type="button">
-          <img className="profile__edit-pen" src={pen} alt="изображение письменной ручки" />
+        <button className="profile__edit-avatar" type="button" onClick={props.onEditAvatar}>
+          <img className="profile__edit-pen"  src={pen} alt="изображение письменной ручки" />
         </button>
       </div>
       <div className="profile__info">
@@ -39,7 +39,7 @@ export default function Main(props) {
         <p className="profile__subtitle">{userInfo.about}</p>
       </div>
       <button className="profile__add-button" type="button" 
-      //onClick={props.onAddPlace}
+        onClick={props.onAddPlace}
       ></button>
     </section>
     <section className="elements">

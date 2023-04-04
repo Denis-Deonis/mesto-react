@@ -9,11 +9,14 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState(null)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
-
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
 
   function closeAllPopups() {
     setSelectedCard(null);
     setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
   }
 
   function closeByOverlay(evt) {
@@ -30,13 +33,25 @@ function App() {
     setIsEditProfilePopupOpen(true);
   }
 
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
   
 
   return (
       <div className='page'>
         <div className='page__container'>
           <Header />
-          <Main onCardClick={handleCardClick} onEditProfile={handleEditProfileClick} />
+          <Main 
+            onCardClick={handleCardClick} 
+            onEditProfile={handleEditProfileClick} 
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+          />
 
           <ImagePopup
             card={selectedCard}
@@ -71,6 +86,58 @@ function App() {
               </>
               )}
             />
+
+            <PopupWithForm
+              isOpen={isAddPlacePopupOpen}
+              onClose={closeAllPopups}
+              onCloseOverlay={closeByOverlay} 
+              name={'add'}
+              form={'newCard'}
+              title={'Новое место'}
+              buttonText={'Создать'}
+              children={(
+                <>
+                  <label className="popup__label" >
+                    <input
+                      className="popup__input popup__input_type_title"
+                      name="name" placeholder="Название" required type="text"
+                      minLength="2" maxLength="30" id="title"
+                    />
+                    <span className="title-error error"></span>
+                  </label>
+                  <label className="popup__label">
+                    <input
+                      className="popup__input popup__input_type_image-link"
+                      name="link" type="url" placeholder="Ссылка на картинку" required
+                      id="link"
+                    />
+                    <span className="link-error error"></span>
+                  </label>
+                </>
+              )}
+            />
+
+          <PopupWithForm
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            name={'avatar'}
+            form={'editAvatarForm'}
+            title={'Обновить аватар'}
+            buttonText={'Сохранить'}
+            children={(
+              <>
+                <label className="popup__label">
+                  <input id="avatar"
+                    className="popup__input popup__input_link-avatar"
+                    name="avatar" type="url" placeholder="Введите ссылку URL" required
+                  />
+                  <span className="avatar-error error"></span>
+                </label>
+              </>
+            )}
+          />
+
+
 
         </div>
       </div>
