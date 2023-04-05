@@ -34,20 +34,20 @@ export default function Main(props) {
           <h1 className="profile__title">{userInfo.name}</h1>
           <button className="profile__edit-button" type="button" aria-label="Редактировать" 
             onClick={props.onEditProfile}
-          ></button>
+          />
         </div>
         <p className="profile__subtitle">{userInfo.about}</p>
       </div>
       <button className="profile__add-button" type="button" 
         onClick={props.onAddPlace}
-      ></button>
+      />
     </section>
     <section className="elements">
       <ul className="elements__list">
-        { cards.map( (card, id) => (
+        { cards.map( (card) => (
             <Card
-              key={id}
               card={card}
+              key={card._id}              
               link={card.link}
               name={card.name}
               likes={card.likes}

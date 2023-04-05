@@ -2,7 +2,7 @@
 export default function Footer(){
 
   const dt = new Date();
-  let year = dt.getFullYear();
+  const year = dt.getFullYear();
 
 
   return(
