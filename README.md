@@ -22,6 +22,10 @@
 
 </details>
 
+## Ссылка на сайт
+
+[Проектная работа на сайте GitHub Pages](https://denis-deonis.github.io/mesto-react/)
+
 ## Функционал:
 
 - Редактирование аватара и профиля;
