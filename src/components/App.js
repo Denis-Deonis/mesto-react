@@ -4,6 +4,7 @@ import Main from './Main';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 import Footer from './Footer';
+import { Route, Routes } from 'react-router-dom';
 
 
 function App() {
@@ -47,12 +48,18 @@ function App() {
       <div className='page'>
         <div className='page__container'>
           <Header />
-          <Main 
-            onCardClick={handleCardClick} 
-            onEditProfile={handleEditProfileClick} 
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-          />
+
+          <Routes>
+            <Route path="/" element={          
+              <Main 
+                onCardClick={handleCardClick} 
+                onEditProfile={handleEditProfileClick} 
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+              /> } 
+            />
+          </Routes>
+
 
           <Footer/>
 
