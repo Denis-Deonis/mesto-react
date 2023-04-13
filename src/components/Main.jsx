@@ -1,14 +1,17 @@
 import pen from '../images/profile/pen.svg'
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import api from "../utils/api";
 import Card from './Card';
+import CurrentUserContext from "../contexts/CurrentUserContext"
 
 
 export default function Main(props) {
 
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = React.useState({});
   const [cards, setCards] = React.useState([]);
+
+  const currentUser = React.useContext(CurrentUserContext)
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([profileInfo, card]) => {
@@ -33,13 +36,14 @@ export default function Main(props) {
         <div className="profile__heading">
           <h1 className="profile__title">{userInfo.name}</h1>
           <button className="profile__edit-button" type="button" aria-label="Редактировать" 
-            onClick={props.onEditProfile}
+            onClick={props.onEditProfile  }
           />
         </div>
         <p className="profile__subtitle">{userInfo.about}</p>
       </div>
       <button className="profile__add-button" type="button" 
-        onClick={props.onAddPlace}
+        onClick={console.log("tabbbbb")}
+        //onClick={props.onAddPlace}
       />
     </section>
     <section className="elements">

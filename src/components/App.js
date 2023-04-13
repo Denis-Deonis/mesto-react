@@ -1,10 +1,12 @@
 import React from 'react';
+import CurrentUserContext from "../contexts/CurrentUserContext"
 import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 import Footer from './Footer';
-import { Route, Routes } from 'react-router-dom';
+import AddPlacePopup from './AddPlacePopup';
+
 
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
 
   function closeAllPopups() {
     setSelectedCard(null);
@@ -45,21 +48,21 @@ function App() {
   
 
   return (
+    <CurrentUserContext.Provider >
+
+    
       <div className='page'>
         <div className='page__container'>
           <Header />
 
-          <Routes>
-            <Route path="/" element={          
-              <Main 
-                onCardClick={handleCardClick} 
-                onEditProfile={handleEditProfileClick} 
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-              /> } 
-            />
-          </Routes>
 
+          <Main 
+            onCardClick={handleCardClick} 
+            onEditProfile={handleEditProfileClick} 
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+          /> 
+            
 
           <Footer/>
 
@@ -68,6 +71,14 @@ function App() {
             onClose={closeAllPopups}
             onCloseOverlay={closeByOverlay} 
           />
+
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+            onCloseOverlay={closeByOverlay} 
+            onLoading={isLoading}
+          />
+
 
           <PopupWithForm
             isOpen={isEditProfilePopupOpen}
@@ -97,35 +108,7 @@ function App() {
               )}
             />
 
-            <PopupWithForm
-              isOpen={isAddPlacePopupOpen}
-              onClose={closeAllPopups}
-              onCloseOverlay={closeByOverlay} 
-              name={'add'}
-              form={'newCard'}
-              title={'Новое место'}
-              buttonText={'Создать'}
-              children={(
-                <>
-                  <label className="popup__label" >
-                    <input
-                      className="popup__input popup__input_type_title"
-                      name="name" placeholder="Название" required type="text"
-                      minLength="2" maxLength="30" id="title"
-                    />
-                    <span className="title-error error"></span>
-                  </label>
-                  <label className="popup__label">
-                    <input
-                      className="popup__input popup__input_type_image-link"
-                      name="link" type="url" placeholder="Ссылка на картинку" required
-                      id="link"
-                    />
-                    <span className="link-error error"></span>
-                  </label>
-                </>
-              )}
-            />
+
 
           <PopupWithForm
             isOpen={isEditAvatarPopupOpen}
@@ -151,6 +134,7 @@ function App() {
 
         </div>
       </div>
+    </CurrentUserContext.Provider>
   );
 }
 

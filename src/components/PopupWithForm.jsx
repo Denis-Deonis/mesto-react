@@ -2,7 +2,7 @@
 export default function PopupWithForm(props) {
 
   return(
-    <div className={`popup popup_type_${props.name} ${props.isOpen ? `popup_opened`: ""}`}  onClick={props.onCloseOverlay} >
+    <div className={`popup popup_type_${props.name} ${props.isOpen && ('popup_opened')}`}  onClick={props.onCloseOverlay} >
       <div className="popup__container">
         <button className="popup__close-button" type="button" onClick={props.onClose}  />
         <form className="popup__form" name={props.form} >
