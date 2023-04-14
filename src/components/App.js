@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 import Footer from './Footer';
 import AddPlacePopup from './AddPlacePopup';
+import EditProfilePopup from './EditProfilePopup';
 
 
 
@@ -68,39 +69,41 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-
-    
-      <div className='page'>
-        <div className='page__container'>
+      <div className="page">
+        <div className="page__container">
           <Header />
 
-
-          <Main 
-          cards={cards}
-            onCardClick={handleCardClick} 
-            onEditProfile={handleEditProfileClick} 
+          <Main
+            cards={cards}
+            onCardClick={handleCardClick}
+            onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
-          /> 
-            
+          />
 
-          <Footer/>
+          <Footer />
 
           <ImagePopup
             card={selectedCard}
             onClose={closeAllPopups}
-            onCloseOverlay={closeByOverlay} 
+            onCloseOverlay={closeByOverlay}
           />
 
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-            onCloseOverlay={closeByOverlay} 
+            onCloseOverlay={closeByOverlay}
             onLoading={isLoading}
           />
 
+          <EditProfilePopup
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            onCloseOverlay={closeByOverlay}
+            onLoading={isLoading}
+          />
 
-          <PopupWithForm
+          {/* <PopupWithForm
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onCloseOverlay={closeByOverlay} 
@@ -126,32 +129,31 @@ function App() {
                 </label>
               </>
               )}
-            />
-
-
+            /> */}
 
           <PopupWithForm
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            name={'avatar'}
-            form={'editAvatarForm'}
-            title={'Обновить аватар'}
-            buttonText={'Сохранить'}
-            children={(
+            name={"avatar"}
+            form={"editAvatarForm"}
+            title={"Обновить аватар"}
+            buttonText={"Сохранить"}
+            children={
               <>
                 <label className="popup__label">
-                  <input id="avatar"
+                  <input
+                    id="avatar"
                     className="popup__input popup__input_link-avatar"
-                    name="avatar" type="url" placeholder="Введите ссылку URL" required
+                    name="avatar"
+                    type="url"
+                    placeholder="Введите ссылку URL"
+                    required
                   />
                   <span className="avatar-error error"></span>
                 </label>
               </>
-            )}
+            }
           />
-
-
-
         </div>
       </div>
     </CurrentUserContext.Provider>
