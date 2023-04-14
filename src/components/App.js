@@ -1,5 +1,6 @@
 import React from 'react';
-import CurrentUserContext from "../contexts/CurrentUserContext"
+import CurrentUserContext from "../contexts/CurrentUserContext";
+import api from '../utils/api';
 import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
@@ -16,12 +17,30 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
+
+
+  React.useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([profileInfo, card]) => {
+      setCurrentUser(profileInfo);
+      setCards(card);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }, []);
+
+  function loadig() {
+    setIsLoading()
+  }
 
   function closeAllPopups() {
     setSelectedCard(null);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+
+    loadig()
   }
 
   function closeByOverlay(evt) {
@@ -48,7 +67,7 @@ function App() {
   
 
   return (
-    <CurrentUserContext.Provider >
+    <CurrentUserContext.Provider value={currentUser}>
 
     
       <div className='page'>
@@ -57,6 +76,7 @@ function App() {
 
 
           <Main 
+          cards={cards}
             onCardClick={handleCardClick} 
             onEditProfile={handleEditProfileClick} 
             onAddPlace={handleAddPlaceClick}
