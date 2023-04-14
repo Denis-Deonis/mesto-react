@@ -29,9 +29,9 @@ function handleChangePlaceLink(e) {
 
   return(
     <PopupWithForm 
-      isOpen={props.isAddPlacePopupOpen}
-      onClose={props.closeAllPopups}
-      onCloseOverlay={props.closeByOverlay} 
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      onCloseOverlay={props.onCloseOverlay} 
       onSubmit={handleSubmit}
       name={'add'}
       form={'newCard'}

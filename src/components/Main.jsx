@@ -42,8 +42,7 @@ export default function Main(props) {
         <p className="profile__subtitle">{userInfo.about}</p>
       </div>
       <button className="profile__add-button" type="button" 
-        onClick={console.log("tabbbbb")}
-        //onClick={props.onAddPlace}
+        onClick={props.onAddPlace}
       />
     </section>
     <section className="elements">
