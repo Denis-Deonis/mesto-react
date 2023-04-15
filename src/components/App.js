@@ -47,6 +47,17 @@ function App() {
     }
   }
 
+  function handleAddPlaceSubmit(data) {
+    setIsLoading(true)
+    api.addNewCard(data)
+    .then((newCard) => {
+      setCards([newCard, ...cards])
+      closeAllPopups()
+    })
+    .catch((error) => console.log(`Ошибка: ${error}`))
+    .finally(() => setIsLoading(false))
+  }
+
   function handleUpdateUser(newUserInfo) {
     setIsLoading(true)
     api.editProfileUserInfo(newUserInfo)
@@ -96,6 +107,7 @@ function App() {
 
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
+            onAddPlace={handleAddPlaceSubmit}
             onClose={closeAllPopups}
             onCloseOverlay={closeByOverlay}
             onLoading={isLoading}

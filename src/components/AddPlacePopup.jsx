@@ -13,6 +13,7 @@ export default function AddPlacePopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log('add new card')
     props.onAddPlace({
         name: placeName,
         link: placeLink,
