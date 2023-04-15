@@ -29,7 +29,7 @@ class Api {
     }
 
     // Редактирование информации о пользователе через попап
-    editProfile(data) {
+    editProfileUserInfo(data) {
       return fetch(`${this._baseUrl}/users/me`, {
         method: 'PATCH',
         headers: this._headers,

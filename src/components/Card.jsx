@@ -5,9 +5,13 @@ export default function Card(props) {
     props.onCardClick(props.card)
   }
 
+  function handleDeleteClick() {
+    props.onConfirmationPopup(true)
+  }
+
   return(
     <li className="element">
-      <button className="element__trash"></button>
+      <button className="element__trash" onClick={handleDeleteClick}></button>
       <img className="element__image" onClick={handleCardClick}  src={props.link} alt={props.name} />
       <div className="element__group">
         <h2 className="element__title">{props.name}</h2>

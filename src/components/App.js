@@ -1,28 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
-import PopupWithForm from './PopupWithForm';
 import Footer from './Footer';
 import AddPlacePopup from './AddPlacePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import PopupConfirmation from './PopupConfirmation';
 
 
 
 function App() {
 
-  const [selectedCard, setSelectedCard] = React.useState(null)
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()]).then(([user, cards]) => {
       setCurrentUser(user);
       setCards(cards);
@@ -36,6 +38,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsConfirmationPopupOpen(false);
   }
 
   function closeByOverlay(evt) {
@@ -44,25 +47,20 @@ function App() {
     }
   }
 
-  function handleCardClick(card) {
-    setSelectedCard(card);
-  }
-
-  function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(true);
-  }
-
-  function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(true);
-  }
-
-  function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
-  }
-
   function handleUpdateUser(newUserInfo) {
     setIsLoading(true)
     api.editProfileUserInfo(newUserInfo)
+      .then((data) => {
+        setCurrentUser(data)
+        closeAllPopups()
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+      .finally(() => setIsLoading(false))
+  }
+
+  function handleUpdateAvatar(newAvatar) {
+    setIsLoading(true)
+    api.updateProfileAvatar(newAvatar)
       .then((data) => {
         setCurrentUser(data)
         closeAllPopups()
@@ -81,10 +79,11 @@ function App() {
 
           <Main
             cards={cards}
-            onCardClick={handleCardClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
+            onCardClick={setSelectedCard}
+            onEditProfile={setIsEditProfilePopupOpen}
+            onAddPlace={setIsAddPlacePopupOpen}
+            onEditAvatar={setIsEditAvatarPopupOpen}
+            onConfirmationPopup={setIsConfirmationPopupOpen}
           />
 
           <Footer />
@@ -105,36 +104,27 @@ function App() {
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-            onCloseOverlay={closeByOverlay}            
+            onCloseOverlay={closeByOverlay}
             onUpdateUser={handleUpdateUser}
             onLoading={isLoading}
           />
 
-
-
-          <PopupWithForm
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            name={"avatar"}
-            form={"editAvatarForm"}
-            title={"Обновить аватар"}
-            buttonText={"Сохранить"}
-            children={
-              <>
-                <label className="popup__label">
-                  <input
-                    id="avatar"
-                    className="popup__input popup__input_link-avatar"
-                    name="avatar"
-                    type="url"
-                    placeholder="Введите ссылку URL"
-                    required
-                  />
-                  <span className="avatar-error error"></span>
-                </label>
-              </>
-            }
+            onCloseOverlay={closeByOverlay}
+            onUpdateAvatar={handleUpdateAvatar}
+            onLoading={isLoading}
           />
+
+          <PopupConfirmation
+            isOpen={isConfirmationPopupOpen}
+            onClose={closeAllPopups}
+            onCloseOverlay={closeByOverlay}
+            onLoading={isLoading}
+          />
+
+
         </div>
       </div>
     </CurrentUserContext.Provider>

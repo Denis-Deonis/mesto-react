@@ -16,7 +16,7 @@ export default function Main(props) {
       <section className="profile">
       <div className="profile__wrapper-relative">
         <img className="profile__avatar" src={currentUser.avatar} alt={currentUser.name} />
-        <button className="profile__edit-avatar" type="button" onClick={props.onEditAvatar}>
+        <button className="profile__edit-avatar" type="button" onClick={() => props.onEditAvatar(true)}>
           <img className="profile__edit-pen"  src={pen} alt="изображение письменной ручки" />
         </button>
       </div>
@@ -24,13 +24,13 @@ export default function Main(props) {
         <div className="profile__heading">
           <h1 className="profile__title">{currentUser.name}</h1>
           <button className="profile__edit-button" type="button" aria-label="Редактировать" 
-            onClick={props.onEditProfile  }
+            onClick={() => props.onEditProfile(true)}
           />
         </div>
         <p className="profile__subtitle">{currentUser.about}</p>
       </div>
       <button className="profile__add-button" type="button" 
-        onClick={props.onAddPlace}
+        onClick={()=> props.onAddPlace(true)}
       />
     </section>
     <section className="elements">
@@ -43,6 +43,7 @@ export default function Main(props) {
               name={card.name}
               likes={card.likes}
               onCardClick={props.onCardClick}
+              onConfirmationPopup={props.onConfirmationPopup}
             />
           ) )          
         }
