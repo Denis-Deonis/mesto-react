@@ -1,5 +1,5 @@
 import PopupWithForm from './PopupWithForm';
-import {useState, useEffect} from "react";
+import React, { useState, useEffect } from 'react';
 
 export default function AddPlacePopup(props) {
 
@@ -11,21 +11,20 @@ export default function AddPlacePopup(props) {
     setPlaceLink("");
   }, [props.isOpen]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('add new card')
+  function handleSubmit(evt) {
+    evt.preventDefault();
     props.onAddPlace({
         name: placeName,
         link: placeLink,
     });
 }
 
-function handleChangePlaceName(e) {
-    setPlaceName(e.target.value);
+function handleChangePlaceName(evt) {
+    setPlaceName(evt.target.value);
 }
 
-function handleChangePlaceLink(e) {
-    setPlaceLink(e.target.value);
+function handleChangePlaceLink(evt) {
+    setPlaceLink(evt.target.value);
 }
 
   return (

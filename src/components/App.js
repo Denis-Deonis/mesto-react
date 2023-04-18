@@ -42,9 +42,7 @@ function App() {
   }
 
   function closeByOverlay(evt) {
-    if (evt.target === evt.currentTarget) {
-      closeAllPopups();
-    }
+    (evt.target === evt.currentTarget) && closeAllPopups();
   }
 
   function handleAddPlaceSubmit(data) {

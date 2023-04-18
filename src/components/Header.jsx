@@ -1,4 +1,5 @@
-import logo from '../images/header/logo.svg'
+import logo from '../images/header/logo.svg';
+import React from 'react';
 
 export default function Header() {
   return(
