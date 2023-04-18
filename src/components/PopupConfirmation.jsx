@@ -3,9 +3,9 @@ import React from 'react';
 
 export default function PopupConfirmation(props) {
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    props.onCardDelete(props.card)
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    props.onCardDelete(props.card);
   }
 
   return(

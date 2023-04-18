@@ -22,6 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [deletedCard, setDeletedCard] = useState({});
 
 
   useEffect(() => {
@@ -33,6 +34,33 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    if (
+      isConfirmationPopupOpen ||
+      isEditAvatarPopupOpen ||
+      isEditProfilePopupOpen ||
+      isAddPlacePopupOpen ||
+      selectedCard
+    ) {
+      function handleEsc(evt) {
+        evt.key === "Escape" && closeAllPopups();
+      }
+
+      document.addEventListener("keydown", handleEsc);
+
+      return () => {
+        document.removeEventListener("keydown", handleEsc);
+      };
+    }
+  }, [
+    isConfirmationPopupOpen,
+    isEditAvatarPopupOpen,
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    selectedCard,
+  ]);
+
+
   function closeAllPopups() {
     setSelectedCard(null);
     setIsEditProfilePopupOpen(false);
@@ -41,9 +69,8 @@ function App() {
     setIsConfirmationPopupOpen(false);
   }
 
-  function closeByOverlay(evt) {
-    (evt.target === evt.currentTarget) && closeAllPopups();
-  }
+  function closeByOverlay(evt) { (evt.target === evt.currentTarget) && closeAllPopups(); }
+
 
   function handleAddPlaceSubmit(data) {
     setIsLoading(true)
@@ -78,6 +105,30 @@ function App() {
       .finally(() => setIsLoading(false))
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((user) =>  user._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((user) => (user._id === card._id ? newCard : user))
+        );
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  }
+
+  function handleCardDelete(card) {
+    setIsLoading(true)
+    api.deleteCard(card._id)
+      .then(() => {
+        setCards((state) => state.filter((item) => item._id !== card._id))
+        closeAllPopups()
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+      .finally(() => setIsLoading(false))
+  }
 
 
   return (
@@ -92,7 +143,9 @@ function App() {
             onEditProfile={setIsEditProfilePopupOpen}
             onAddPlace={setIsAddPlacePopupOpen}
             onEditAvatar={setIsEditAvatarPopupOpen}
+            onCardLike={handleCardLike}
             onConfirmationPopup={setIsConfirmationPopupOpen}
+            onDeletedCard={setDeletedCard}
           />
 
           <Footer />
@@ -132,6 +185,8 @@ function App() {
             onClose={closeAllPopups}
             onCloseOverlay={closeByOverlay}
             onLoading={isLoading}
+            onCardDelete={handleCardDelete}
+            card={deletedCard}
           />
 
 
