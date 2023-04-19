@@ -36,7 +36,7 @@ function handleChangePlaceLink(evt) {
       name={"add"}
       form={"newCard"}
       title={"Новое место"}
-      buttonText={props.onLoading ? `Сохранение` : `Создать`}
+      buttonText={props.onLoading ? `Сохранение...` : `Сохранить`}
     >
       <label className="popup__label">
         <input

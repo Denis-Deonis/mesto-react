@@ -13,20 +13,20 @@ export default function EditProfilePopup(props) {
     setAbout(currentUser.about)
   }, [currentUser, props.isOpen]);
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleSubmit(evt) {
+    evt.preventDefault()
     props.onUpdateUser({
       name: name,
       about: about,
     })
   }
 
-  function handleChangeName(e) {
-    setName(e.target.value)
+  function handleChangeName(evt) {
+    setName(evt.target.value)
   }
 
-  function handleChangeAbout(e) {
-    setAbout(e.target.value)
+  function handleChangeAbout(evt) {
+    setAbout(evt.target.value)
   }
 
 
